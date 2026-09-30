@@ -18,7 +18,9 @@ CREATE TABLE IF NOT EXISTS cards (
     fixes_json  TEXT NOT NULL,
     cluster_id  TEXT,
     embedding_json TEXT NOT NULL
-)
+);
+CREATE INDEX IF NOT EXISTS idx_cards_created_at ON cards(created_at);
+CREATE INDEX IF NOT EXISTS idx_cards_cluster_id ON cards(cluster_id);
 """
 
 
@@ -36,7 +38,7 @@ def _conn():
 def init_db() -> None:
     Path(config.DB_PATH).parent.mkdir(parents=True, exist_ok=True)
     with _conn() as con:
-        con.execute(SCHEMA)
+        con.executescript(SCHEMA)
 
 
 def _row_to_card(row: sqlite3.Row) -> dict:
@@ -80,3 +82,15 @@ def all_cards_with_embeddings() -> list[tuple[dict, list[float]]]:
 def set_cluster_ids(mapping: dict[str, str]) -> None:
     with _conn() as con:
         con.executemany("UPDATE cards SET cluster_id = ? WHERE id = ?", [(k, c) for c, k in mapping.items()])
+
+
+def count_cards() -> int:
+    with _conn() as con:
+        row = con.execute("SELECT COUNT(*) AS cnt FROM cards").fetchone()
+    return int(row["cnt"]) if row else 0
+
+
+def get_cards_by_cluster(cluster_id: str) -> list[dict]:
+    with _conn() as con:
+        rows = con.execute("SELECT * FROM cards WHERE cluster_id = ? ORDER BY created_at DESC", (cluster_id,)).fetchall()
+    return [_row_to_card(r) for r in rows]

@@ -4,6 +4,8 @@ faster-whisper decodes webm/ogg itself through PyAV, so ffmpeg is usually not ne
 Install ffmpeg only if a browser recording fails to decode.
 """
 import importlib.util
+import io
+import os
 
 from . import config
 
@@ -31,10 +33,27 @@ def is_ready() -> bool:
 
 def transcribe(audio_path: str) -> str:
     """Return the transcript. Raises ValueError('empty_audio') if nothing was said."""
+    if not os.path.exists(audio_path) or os.path.getsize(audio_path) == 0:
+        raise ValueError("empty_audio")
+
     if config.STUB_MODE:
         return STUB_TRANSCRIPT
-    segments, _info = _get_model().transcribe(audio_path, beam_size=1, vad_filter=True)
-    text = " ".join(s.text.strip() for s in segments).strip()
+
+    # Read into an in-memory buffer so Windows file locks don't block cleanup of temp files
+    with open(audio_path, "rb") as f:
+        audio_bytes = io.BytesIO(f.read())
+
+    try:
+        segments, _info = _get_model().transcribe(
+            audio_bytes,
+            beam_size=1,
+            vad_filter=True,
+            vad_parameters=dict(min_silence_duration_ms=500),
+        )
+        text = " ".join(s.text.strip() for s in segments).strip()
+    except Exception as exc:
+        raise ValueError("unreadable_audio") from exc
+
     if not text:
         raise ValueError("empty_audio")
     return text
