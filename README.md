@@ -75,6 +75,17 @@ uvicorn app.main:app --reload --port 8000
 
 First request is slow while models load. The server warms up Whisper and MiniLM at startup; run `ollama run qwen2.5:3b` once beforehand so the LLM is already in memory. If your laptop is too slow, use `qwen2.5:1.5b` and `WHISPER_MODEL=tiny`.
 
+Optional fallback if Ollama is too slow: set `USE_CLOUD_API=1` plus `CLOUD_API_KEY` (Groq or any OpenAI-compatible chat API). Leave it off for the default local demo.
+
+Real-mode smoke test (Tamil, after `STUB_MODE=0`):
+
+```bash
+curl -X POST localhost:8000/api/rant -H "Content-Type: application/json" \
+  -d "{\"text\":\"என்னுடைய பள்ளி நூலகத்தில் வைஃபை மிகவும் மெதுவாக இருக்கிறது\"}"
+```
+
+The JSON card must still have `problem`, `pattern`, `affected`, and three `fixes` in English.
+
 ## Test on a phone
 
 Browsers only allow the mic over HTTPS. Run a free tunnel to the frontend:
@@ -84,6 +95,8 @@ cloudflared tunnel --url http://localhost:3000     # or: ngrok http 3000
 ```
 
 Open the HTTPS link on your phone. The frontend forwards `/api/*` to the backend, so one tunnel is enough.
+
+The URL is generated each time you start the tunnel (it looks like `https://….trycloudflare.com` or `https://….ngrok-free.app`). Paste that live URL in the team chat; do not commit it. Confirm on a phone that a spoken complaint reaches the backend (`POST /api/rant` with audio).
 
 ## Read next
 

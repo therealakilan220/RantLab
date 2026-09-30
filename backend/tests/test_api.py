@@ -22,6 +22,13 @@ def test_text_rant_matches_contract(client):
     assert client.get(f"/api/cards/{card['id']}").json()["id"] == card["id"]
 
 
+def test_tamil_text_rant_matches_contract(client):
+    card = rant(client, "என்னுடைய பள்ளி நூலகத்தில் வைஃபை மிகவும் மெதுவாக இருக்கிறது")
+    assert card["input_type"] == "text"
+    assert len(card["fixes"]) == 3
+    assert all(k in card for k in ("problem", "pattern", "affected"))
+
+
 def test_voice_rant(client):
     r = client.post("/api/rant", files={"audio": ("rant.webm", b"x" * 5000, "audio/webm")})
     assert r.status_code == 200, r.text
