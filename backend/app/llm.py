@@ -5,6 +5,7 @@ Flow: ask for JSON -> normalise labels -> validate with pydantic -> on failure r
 with the error message -> otherwise raise llm_failed.
 """
 import json
+import re
 
 import httpx
 from pydantic import ValidationError
@@ -118,6 +119,24 @@ def _norm(value) -> str:
     return cleaned
 
 
+def _extract_json(raw: str) -> dict:
+    """Extract and parse JSON from raw text, removing markdown codeblocks or extra prose."""
+    text = raw.strip()
+    # Strip markdown fences if present
+    match = re.search(r"```(?:json)?\s*([\s\S]*?)\s*```", text, re.IGNORECASE)
+    if match:
+        text = match.group(1).strip()
+    
+    # If not surrounded by fences, search for the outermost JSON object braces
+    if not (text.startswith("{") and text.endswith("}")):
+        start = text.find("{")
+        end = text.rfind("}")
+        if start != -1 and end != -1 and end > start:
+            text = text[start : end + 1]
+
+    return json.loads(text)
+
+
 def _clean(data: dict) -> dict:
     fixes = data.get("fixes")
     if isinstance(fixes, list):
@@ -195,10 +214,11 @@ def generate_card_fields(transcript: str) -> dict:
             raise ApiError(503, "model_unavailable",
                            f"The AI model isn't running. {hint}") from exc
         try:
-            return LLMOutput.model_validate(_clean(json.loads(raw))).model_dump()
+            parsed = _extract_json(raw)
+            return LLMOutput.model_validate(_clean(parsed)).model_dump()
         except (ValidationError, ValueError, AttributeError) as exc:
             messages += [
                 {"role": "assistant", "content": raw},
-                {"role": "user", "content": f"That JSON was invalid: {exc}. Return only the corrected JSON object."},
+                {"role": "user", "content": f"That JSON was invalid: {exc}. Return only the corrected JSON object with keys problem, pattern, affected, and fixes (exactly 3 items)."},
             ]
     raise ApiError(502, "llm_failed", "We couldn't turn that into an action plan. Please try again.")
