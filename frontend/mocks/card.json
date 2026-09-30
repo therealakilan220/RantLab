@@ -1,0 +1,15 @@
+{
+  "id": "c_mock01",
+  "created_at": "2026-09-30T11:05:12Z",
+  "input_type": "voice",
+  "transcript": "The Wi-Fi in the library keeps dropping every afternoon and nobody seems to fix it.",
+  "problem": "Library Wi-Fi drops repeatedly in the afternoon.",
+  "pattern": "Likely overloaded access points during peak study hours.",
+  "affected": "Students who study in the library, especially before exams.",
+  "fixes": [
+    { "title": "Post a fault-reporting QR code in the library", "detail": "Link it to a simple form so IT sees exactly when and where drops happen.", "owner": "Library staff and IT desk", "cost": "free", "timeframe": "today" },
+    { "title": "Survey access-point coverage and load", "detail": "Check which access points are saturated between 2 and 5 pm.", "owner": "IT / Network team", "cost": "free", "timeframe": "this_week" },
+    { "title": "Add or upgrade access points in busy zones", "detail": "Use the survey data to place extra capacity where students actually sit.", "owner": "IT / Network team", "cost": "budget", "timeframe": "this_semester" }
+  ],
+  "cluster_id": null
+}

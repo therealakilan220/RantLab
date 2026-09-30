@@ -1,0 +1,35 @@
+{
+  "generated_at": "2026-09-30T12:00:00Z",
+  "clusters": [
+    {
+      "id": "k_1",
+      "label": "Library Wi-Fi drops in the afternoon",
+      "count": 3,
+      "latest_at": "2026-09-30T11:05:12Z",
+      "complaints": [
+        { "card_id": "c_mock01", "transcript": "The Wi-Fi in the library keeps dropping every afternoon and nobody seems to fix it." },
+        { "card_id": "c_mock01", "transcript": "Can't load anything on the library network after lunch." },
+        { "card_id": "c_mock01", "transcript": "Library internet dies right when everyone is studying for exams." }
+      ]
+    },
+    {
+      "id": "k_2",
+      "label": "Long canteen queues at lunch",
+      "count": 2,
+      "latest_at": "2026-09-30T10:40:00Z",
+      "complaints": [
+        { "card_id": "c_mock01", "transcript": "The canteen line takes 25 minutes and our break is only 40." },
+        { "card_id": "c_mock01", "transcript": "Only one billing counter is open at lunch, it's chaos." }
+      ]
+    },
+    {
+      "id": "k_3",
+      "label": "Projector not working in room 204",
+      "count": 1,
+      "latest_at": "2026-09-30T09:15:00Z",
+      "complaints": [
+        { "card_id": "c_mock01", "transcript": "The projector in 204 has been flickering for a week." }
+      ]
+    }
+  ]
+}
