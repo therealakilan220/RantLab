@@ -1,0 +1,26 @@
+{
+  "generated_at": "2026-09-30T12:00:00Z",
+  "clusters": [
+    {
+      "id": "k_wifi1",
+      "label": "Library Wi-Fi drops repeatedly in the afternoon.",
+      "count": 3,
+      "latest_at": "2026-09-30T11:40:00Z",
+      "complaints": [
+        { "card_id": "c_mock01", "transcript": "The Wi-Fi in the library keeps dropping every afternoon and nobody seems to fix it." },
+        { "card_id": "c_mock02", "transcript": "Library internet is unusable after lunch, my video calls keep cutting out." },
+        { "card_id": "c_mock03", "transcript": "Wi-Fi on the second floor of the library disconnects every few minutes." }
+      ]
+    },
+    {
+      "id": "k_food1",
+      "label": "Canteen lunch queues are long because too few counters are open.",
+      "count": 2,
+      "latest_at": "2026-09-30T11:10:00Z",
+      "complaints": [
+        { "card_id": "c_mock04", "transcript": "The canteen queue at lunch is insane, only two counters are open." },
+        { "card_id": "c_mock05", "transcript": "I wait 25 minutes for lunch every day at the canteen." }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+[
+  { "group": "wifi", "text": "The Wi-Fi in the library keeps dropping every afternoon and nobody seems to fix it." },
+  { "group": "wifi", "text": "Library internet is unusable after lunch, my video calls keep cutting out." },
+  { "group": "wifi", "text": "The Wi-Fi in the main block disconnects every few minutes during lectures." },
+  { "group": "wifi", "text": "Campus Wi-Fi is so slow near the labs that I can't even submit assignments on time." },
+  { "group": "canteen", "text": "The canteen queue at lunch is insane, I waited 25 minutes and only two counters were open." },
+  { "group": "canteen", "text": "Canteen food is always cold by the time I reach the counter and the prices keep going up." },
+  { "group": "canteen", "text": "There is never enough seating in the canteen during lunch, people eat standing up." },
+  { "group": "hostel", "text": "There is no hot water in the hostel bathrooms in the morning, it has been like this for two weeks." },
+  { "group": "hostel", "text": "The water pressure on the third floor of the boys hostel is so low that showers take forever." },
+  { "group": "hostel", "text": "Hostel water supply cuts off every morning right when everyone is getting ready for class." },
+  { "group": "bus", "text": "The college bus arrives twenty minutes late almost every day and we miss the first lecture." },
+  { "group": "bus", "text": "There is no bus after 6 pm so students staying for lab work have no way to get home." }
+]

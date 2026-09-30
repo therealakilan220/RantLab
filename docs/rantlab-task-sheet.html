@@ -1,0 +1,252 @@
+<title>RantLab Task Sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Layout: one column per person, one band per phase, so the sheet reads like a shift board. */
+:root{
+  --bg:#f2f4f6; --surface:#ffffff; --ink:#15212b; --muted:#5b6a77; --line:#d9e0e6;
+  --accent:#0d6b5f; --warn:#a4560a;
+  --p1:#0b6e99; --p2:#a85a0c; --p3:#2c7a4b; --p4:#7b3fb3;
+  --f-display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f171d; --surface:#17222a; --ink:#e6edf2; --muted:#93a4b1; --line:#2a3945;
+  --accent:#3cc4b0; --warn:#f0a35a;
+  --p1:#5cb8e6; --p2:#f0a35a; --p3:#63c98a; --p4:#c09af0; color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#0f171d; --surface:#17222a; --ink:#e6edf2; --muted:#93a4b1; --line:#2a3945;
+  --accent:#3cc4b0; --warn:#f0a35a;
+  --p1:#5cb8e6; --p2:#f0a35a; --p3:#63c98a; --p4:#c09af0; color-scheme:dark;}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5;padding-inline:16px;padding-block:24px 64px}
+.wrap{max-width:1240px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);margin:0;text-wrap:balance;line-height:1.15}
+h1{font-size:clamp(28px,4vw,40px)}
+h2{font-size:20px}
+.sub{color:var(--muted);margin:6px 0 0;max-width:68ch}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+header{display:flex;flex-direction:column;gap:16px}
+.overall{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.bar{height:8px;border-radius:99px;background:var(--line);overflow:hidden;flex:1;min-width:160px}
+.bar>i{display:block;height:100%;background:var(--accent);width:0;transition:width .25s}
+.controls{display:flex;gap:16px;flex-wrap:wrap;align-items:center;color:var(--muted);font-size:14px}
+.controls label{display:flex;gap:8px;align-items:center;cursor:pointer}
+.note{font-size:13px;color:var(--muted)}
+
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.grid.solo{grid-template-columns:minmax(0,720px)}
+.grid.solo .hide-solo{display:none}
+
+.person{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.person input[type=text]{font:600 16px var(--f-display);color:var(--ink);background:transparent;border:0;border-bottom:1px dashed var(--line);padding:2px 0;width:100%}
+.person input[type=text]:focus-visible{outline:2px solid var(--c);outline-offset:2px}
+.role{font-size:13px;color:var(--muted)}
+.pcount{display:flex;justify-content:space-between;align-items:center;font-size:13px}
+.pcount .bar>i{background:var(--c)}
+.focus{align-self:flex-start;font:500 12px var(--f-body);color:var(--ink);background:transparent;border:1px solid var(--line);border-radius:6px;padding:4px 10px;cursor:pointer}
+.focus[aria-pressed=true]{background:var(--c);color:var(--surface);border-color:var(--c)}
+.focus:focus-visible{outline:2px solid var(--c);outline-offset:2px}
+
+.phase{display:flex;flex-direction:column;gap:10px}
+.phead{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;padding-top:10px;border-top:1px solid var(--line)}
+.phead .hrs{font:500 13px var(--f-mono);color:var(--surface);background:var(--ink);border-radius:4px;padding:2px 8px}
+.check{font-size:13px;color:var(--warn);font-weight:500}
+.cell{display:flex;flex-direction:column;gap:8px;min-width:0}
+.task{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--c);border-radius:6px;padding:10px 12px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 10px}
+.task input{margin:3px 0 0;width:16px;height:16px;accent-color:var(--c);cursor:pointer}
+.task .t{font-weight:600;line-height:1.3}
+.task .d{grid-column:2;font-size:13.5px;color:var(--muted)}
+.task .m{grid-column:2;display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:12px}
+.tag{font:500 11px var(--f-mono);text-transform:uppercase;letter-spacing:.05em;padding:1px 6px;border-radius:4px;border:1px solid var(--line);color:var(--muted)}
+.tag.mvp{color:var(--accent);border-color:var(--accent)}
+.who{display:none;color:var(--c);font-weight:600}
+.task.done .t{text-decoration:line-through;color:var(--muted)}
+.task.done{opacity:.6}
+.empty{color:var(--line);text-align:center;font-size:20px}
+
+.panels{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.panel ul,.panel ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;font-size:14px}
+.panel li span{color:var(--muted)}
+
+@media (max-width:960px){
+  .grid{grid-template-columns:minmax(0,1fr)}
+  .who{display:inline}
+  .empty{display:none}
+  .person{border-top-width:1px;border-left:4px solid var(--c)}
+}
+@media (prefers-reduced-motion:reduce){.bar>i{transition:none}}
+</style>
+
+<div class="wrap">
+<header>
+  <div>
+    <h1>RantLab: 24-Hour Task Sheet</h1>
+    <p class="sub">Team Fantastic 4, Open Innovation track. Everything runs on free, local tools with no paid API. Rename the columns to your real names.</p>
+  </div>
+  <div class="overall"><span class="mono" id="overallTxt"></span><div class="bar"><i id="overallBar"></i></div></div>
+  <div class="controls">
+    <label><input type="checkbox" id="hideStretch"> Hide stretch tasks</label>
+    <span class="note">Ticks and names are saved in this browser only. Agree on one person to keep the master copy, or check in at each checkpoint.</span>
+  </div>
+</header>
+
+<section class="grid" id="people" aria-label="Team"></section>
+<div id="phases" style="display:flex;flex-direction:column;gap:28px"></div>
+
+<section class="phase">
+  <div class="phead"><h2>Rules for a 24-hour build</h2></div>
+  <div class="panels">
+    <div class="panel"><h3>Must ship (MVP)</h3>
+      <ol><li>Record or type a rant</li><li>Transcribe locally</li><li>Three fixes with owner, cost and timeframe</li><li>Shareable card</li></ol>
+      <span class="note">If this works on a phone at H16, you are safe.</span></div>
+    <div class="panel"><h3>Cut in this order</h3>
+      <ol><li>Rough visual concept image</li><li>Recurring-issue ranking</li><li>Board page polish</li><li>Download card as PNG</li><li>Board page entirely (show clusters in a terminal or slide instead)</li></ol></div>
+    <div class="panel"><h3>Free stack</h3>
+      <ul>
+        <li>Ollama with qwen2.5:3b <span>(LLM)</span></li>
+        <li>faster-whisper <span>(speech to text)</span></li>
+        <li>sentence-transformers MiniLM <span>(clustering)</span></li>
+        <li>FastAPI, SQLite, Next.js, Tailwind</li>
+        <li>GitHub, OBS, html-to-image</li>
+        <li>Cloudflare Tunnel or ngrok free plan <span>(HTTPS link so phones can use the mic)</span></li>
+      </ul></div>
+    <div class="panel"><h3>Risks and fallbacks</h3>
+      <ul>
+        <li>Laptop too slow for 3B: drop to qwen2.5:1.5b or use whisper tiny. Decide by H1.</li>
+        <li>Model returns bad JSON: validate and retry once, keep a canned example card for the demo.</li>
+        <li>Mic blocked off localhost: needs HTTPS, so set up the tunnel by H6.</li>
+        <li>Venue Wi-Fi fails: phone hotspot, plus the backup video.</li>
+        <li>Optional fallback: a free-tier hosted model (Gemini or Groq), rate-limited and needs a key. Check current limits first and keep it off by default.</li>
+      </ul></div>
+  </div>
+</section>
+</div>
+
+<script>
+const PEOPLE=[
+ {id:"a",n:"Akilan",role:"Team lead: backend, LLM prompt, integration",c:"--p1"},
+ {id:"b",n:"Arvind",role:"Speech, database, embeddings, clustering",c:"--p2"},
+ {id:"c",n:"Jayasree",role:"Frontend: recorder, card, share, board (Demo lead)",c:"--p3"},
+ {id:"d",n:"Priyan",role:"Test data, QA, privacy, demo and deck",c:"--p4"}
+];
+const PHASES=[
+ {t:"Setup",h:"H0 to H1",k:"Checkpoint: everyone can run the repo and their own tool locally."},
+ {t:"Build the parts",h:"H1 to H6",k:"Checkpoint H6: a typed complaint returns three fixes from the API."},
+ {t:"Wire it together",h:"H6 to H12",k:"Checkpoint H12: voice in the browser produces a card."},
+ {t:"MVP freeze and testing",h:"H12 to H16",k:"Checkpoint H16: feature freeze. After this, only bug fixes."},
+ {t:"Stretch and polish",h:"H16 to H20",k:"Checkpoint H20: stop building. Nothing new after this."},
+ {t:"Pitch prep and buffer",h:"H20 to H24",k:"Two full online 8-minute run-throughs, Jayasree driving demo screen."}
+];
+// [id, person, phase, hours, title, detail, tag]
+const T=[
+["a1","a",0,0.5,"Create the repo and the API contract","Free GitHub repo, one branch per person, and an api-contract.md giving the JSON shape of a card: problem, pattern, who is affected, and three fixes each with owner, cost and timeframe. Frontend mocks against it from hour 1.","mvp"],
+["a2","a",0,0.5,"Install Ollama and pull qwen2.5:3b","Confirm it answers in under about 15 seconds on the local machine. If not, switch to qwen2.5:1.5b now, not at hour 10.","mvp"],
+["a3","a",1,3,"Write the fix-generation prompt","Ask Ollama for strict JSON. Validate with pydantic and retry once on bad output. Three fixes ordered by feasibility, cost as free, cheap or budget, timeframe as today, this week or this semester.","mvp"],
+["a4","a",1,1.5,"FastAPI app with POST /api/rant/text","Text in, card out, with CORS on. This is the first thing Jayasree can call for real.","mvp"],
+["a5","a",2,3,"Full pipeline: POST /api/rant","Audio or text, then transcribe(), then the LLM, save to SQLite, return the card. Add GET /api/cards/{id} for the share page.","mvp"],
+["a6","a",2,1,"Set up the HTTPS tunnel","Cloudflare Tunnel or ngrok free plan so phones can reach the app and allow the mic for online testing. Write the command in the README.","mvp"],
+["a7","a",3,2,"Merge and fix the top bugs","Merge all branches, run end to end, work through Priyan's bug log in priority order.","mvp"],
+["a8","a",3,0.25,"Tag v1-mvp","Tag the working build on GitHub and share the tag with Jayasree for the demo machine.","mvp"],
+["a9","a",4,2,"Tune the prompt on weak outputs","Re-run the 10 test complaints. Fix vague fixes, odd owners and wrong cost labels.","mvp"],
+["a10","a",4,1,"Optional model fallback switch","One environment variable that swaps Ollama for a free-tier hosted model. Off by default.","stretch"],
+["a11","a",5,3,"Demo environment & team rehearsal","Support Jayasree with backend environment setup, offline run tested, screen-share ready. Rehearse slides 1 and 2.","mvp"],
+
+["b1","b",0,0.5,"Install faster-whisper and ffmpeg","Transcribe one test clip on CPU. Pick tiny, base or small by speed on the local laptop.","mvp"],
+["b2","b",1,2,"Write transcribe(audio)","Accept the webm or ogg the browser records, convert with ffmpeg, return text. Target under 10 seconds for a 30 second clip.","mvp"],
+["b3","b",1,1.5,"SQLite schema","Tables for complaints, cards and embeddings. No name or email columns, so reports are anonymous by design.","mvp"],
+["b4","b",1,1.5,"Embedding helper","Load MiniLM once at startup. embed(text) returns a vector that is stored when a complaint is saved.","mvp"],
+["b5","b",2,3,"Clustering","Cosine similarity with a threshold, or agglomerative clustering. Test on Priyan's seed set so Wi-Fi complaints group together and canteen ones do not.","mvp"],
+["b6","b",3,1.5,"GET /api/board","Return clusters with a count, a label and the complaints inside. Label with the most central complaint to save LLM calls.","mvp"],
+["b7","b",3,1.5,"Speed check","Time upload, transcription and LLM separately. Give Jayasree the numbers for the loading messages.","mvp"],
+["b8","b",4,2,"Handle messy audio","Silence, very short clips, background noise, regional accents, mixed-language speech. Return a friendly error, never a crash.","mvp"],
+["b9","b",4,1,"Rank recurring issues","Sort clusters by count and recency for the weekly board.","stretch"],
+["b10","b",5,2.5,"Speaker 2 rehearsal and tech Q&A","Arvind rehearses slides 3 and 4. Be ready to explain why Whisper and MiniLM, and what happens with wrong clusters.","mvp"],
+
+["c1","c",0,0.5,"Scaffold Next.js, TypeScript, Tailwind","Work against mock JSON from api-contract.md so nothing waits on the backend.","mvp"],
+["c2","c",1,3,"Record screen","Browser MediaRecorder, 30 second cap with a visible timer, re-record button, and a typed-text option.","mvp"],
+["c3","c",1,2,"Concept card component","Problem, pattern, then three fix rows with owner, a cost chip and a timeframe chip.","mvp"],
+["c4","c",2,2,"Connect to the real API","Upload audio, show stages (Transcribing, Thinking), handle errors and timeouts.","mvp"],
+["c5","c",2,2,"Card page at /card/[id]","A public link that renders one card. Design for phones and screen sharing first.","mvp"],
+["c6","c",3,1.5,"Copy link and download as image","html-to-image (free npm package) to save the card as a PNG.","stretch"],
+["c7","c",3,1.5,"Mobile and browser pass","Chrome and Safari, mic permission prompts, small screens.","mvp"],
+["c8","c",4,3,"Board page at /board","List clusters with counts and expand to see the complaints. Cut first if behind.","stretch"],
+["c9","c",4,1,"Polish states and branding","Loading, empty and error states, RantLab logo, the tagline on the home screen.","mvp"],
+["c10","c",5,2.5,"Online Demo Lead & Speaker 3 rehearsal","Jayasree drives the live online demo screen-share. Practice demo click path until under 60 seconds.","mvp"],
+
+["d1","d",0,1,"Write 40 realistic campus complaints","Wi-Fi, canteen, hostel water, library seats, AC, bus timing. Save as seed.json, with deliberate near-duplicates so clustering has something to find.","mvp"],
+["d2","d",1,1.5,"Record 6 voice samples","Different voices, 20 to 30 seconds each, one noisy. Used for Whisper tests and as demo backups.","mvp"],
+["d3","d",1,1.5,"Evaluation rubric","Score each output: relevant, specific, sensible owner. Add a stopwatch time from tap to card. These become the real numbers on slide 7.","mvp"],
+["d4","d",2,3,"Test the model on 10 complaints","Start as soon as Akilan's prompt lands, around H4. Send back what was weak.","mvp"],
+["d5","d",2,2,"README and architecture diagram","Setup steps anyone can follow, plus the flow diagram for online presentation.","mvp"],
+["d6","d",3,3,"QA pass and bug log","Long rant, silence, text input, online network conditions. Log each bug with steps and priority.","mvp"],
+["d7","d",3,1,"Privacy checklist","No personal data stored, anonymous by default, a short notice on the record screen, a line on how data is handled.","mvp"],
+["d8","d",4,2,"Backup demo video","90 seconds with OBS or screen recorder: voice, card, board. Ready for screen-share fallback.","mvp"],
+["d9","d",4,2,"Rough visual concept for the top fix","Only if every MVP item passes. Test a free image service first and drop this if it is flaky.","stretch"],
+["d10","d",5,3,"Real numbers into slides and speaker 4 rehearsal","Priyan updates slide 7 with measured times and relevance scores. Prepare a one-page Q&A sheet for the team.","mvp"]
+];
+
+const $=s=>document.querySelector(s);
+const safe=(f,d)=>{try{return f()}catch(e){return d}};
+let done=safe(()=>JSON.parse(localStorage.getItem("rl-done")||"{}"),{});
+let names=safe(()=>JSON.parse(localStorage.getItem("rl-names")||"{}"),{});
+let focus=null, hideStretch=false;
+const save=()=>safe(()=>{localStorage.setItem("rl-done",JSON.stringify(done));localStorage.setItem("rl-names",JSON.stringify(names))});
+const nm=p=>names[p.id]||p.n;
+const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
+const visible=t=>!(hideStretch&&t[6]==="stretch");
+
+function render(){
+  const ppl=$("#people"), ph=$("#phases");
+  ppl.className="grid"+(focus?" solo":"");
+  ppl.replaceChildren();
+  PEOPLE.forEach(p=>{
+    const mine=T.filter(t=>t[1]===p.id&&visible(t));
+    const d=mine.filter(t=>done[t[0]]).length;
+    const hrs=mine.reduce((s,t)=>s+t[3],0);
+    const card=el("div","person"+(focus&&focus!==p.id?" hide-solo":""));
+    card.style.setProperty("--c",`var(${p.c})`);
+    const inp=el("input");inp.type="text";inp.id="name-"+p.id;inp.value=nm(p);inp.setAttribute("aria-label","Name of "+p.role);
+    inp.addEventListener("change",()=>{names[p.id]=inp.value.trim()||p.n;save();render()});
+    const pc=el("div","pcount");
+    pc.append(el("span","mono",`${d}/${mine.length} done`),el("span","mono",`${hrs.toFixed(1)} h`));
+    const bar=el("div","bar");const i=el("i");i.style.width=(mine.length?d/mine.length*100:0)+"%";bar.append(i);
+    const b=el("button","focus",focus===p.id?"Show everyone":"Show only me");b.type="button";b.setAttribute("aria-pressed",focus===p.id);
+    b.addEventListener("click",()=>{focus=focus===p.id?null:p.id;render()});
+    card.append(inp,el("div","role",p.role),pc,bar,b);
+    ppl.append(card);
+  });
+  ph.replaceChildren();
+  PHASES.forEach((p,pi)=>{
+    const sec=el("section","phase");
+    const head=el("div","phead");
+    head.append(el("h2",null,p.t),el("span","hrs",p.h),el("span","check",p.k));
+    const g=el("div","grid"+(focus?" solo":""));
+    PEOPLE.forEach(pp=>{
+      const cell=el("div","cell"+(focus&&focus!==pp.id?" hide-solo":""));
+      const ts=T.filter(t=>t[2]===pi&&t[1]===pp.id&&visible(t));
+      if(!ts.length)cell.append(el("div","empty","·"));
+      ts.forEach(t=>{
+        const row=el("label","task"+(done[t[0]]?" done":""));
+        row.style.setProperty("--c",`var(${pp.c})`);
+        const cb=el("input");cb.type="checkbox";cb.id="t-"+t[0];cb.checked=!!done[t[0]];
+        cb.addEventListener("change",()=>{if(cb.checked)done[t[0]]=1;else delete done[t[0]];save();render()});
+        const m=el("div","m");
+        m.append(el("span","who",nm(pp)),el("span","mono",t[3]+" h"),el("span","tag "+t[6],t[6]==="mvp"?"MVP":"Stretch"));
+        row.append(cb,el("span","t",t[4]),el("span","d",t[5]),m);
+        cell.append(row);
+      });
+      g.append(cell);
+    });
+    sec.append(head,g);ph.append(sec);
+  });
+  const all=T.filter(visible),dn=all.filter(t=>done[t[0]]).length;
+  $("#overallTxt").textContent=`${dn} of ${all.length} tasks done`;
+  $("#overallBar").style.width=(all.length?dn/all.length*100:0)+"%";
+}
+$("#hideStretch").addEventListener("change",e=>{hideStretch=e.target.checked;render()});
+render();
+</script>
