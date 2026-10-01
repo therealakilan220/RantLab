@@ -1,0 +1,422 @@
+[
+  {
+    "id": 1,
+    "group": "wifi",
+    "text": "The Wi-Fi in the library keeps dropping every afternoon and nobody seems to fix it.",
+    "card": {
+      "problem": "The Wi-Fi in the library keeps dropping every afternoon and nobody seems to fix it",
+      "pattern": "Stub mode: this is a canned pattern. Set STUB_MODE=0 for real output.",
+      "affected": "Stub mode: other students who use the same place.",
+      "fixes": [
+        {
+          "title": "Post a fault-reporting QR code",
+          "detail": "Link it to a simple form so staff see when and where it happens.",
+          "owner": "Facilities desk",
+          "cost": "free",
+          "timeframe": "today"
+        },
+        {
+          "title": "Survey the affected area",
+          "detail": "Check when the problem is worst and how many people it hits.",
+          "owner": "Facilities team",
+          "cost": "free",
+          "timeframe": "this_week"
+        },
+        {
+          "title": "Fund a permanent fix",
+          "detail": "Use the survey data to justify a small budget request.",
+          "owner": "Administration",
+          "cost": "budget",
+          "timeframe": "this_semester"
+        }
+      ],
+      "id": "c_173995",
+      "created_at": "2026-09-30T20:06:56Z",
+      "input_type": "text",
+      "transcript": "The Wi-Fi in the library keeps dropping every afternoon and nobody seems to fix it.",
+      "cluster_id": null
+    },
+    "elapsed_s": 2.31,
+    "auto_flags": [
+      "problem field looks like a copy of the transcript"
+    ]
+  },
+  {
+    "id": 2,
+    "group": "canteen",
+    "text": "The canteen queue at lunch is insane, I waited 25 minutes and only two counters were open.",
+    "card": {
+      "problem": "The canteen queue at lunch is insane, I waited 25 minutes and only two counters were open",
+      "pattern": "Stub mode: this is a canned pattern. Set STUB_MODE=0 for real output.",
+      "affected": "Stub mode: other students who use the same place.",
+      "fixes": [
+        {
+          "title": "Post a fault-reporting QR code",
+          "detail": "Link it to a simple form so staff see when and where it happens.",
+          "owner": "Facilities desk",
+          "cost": "free",
+          "timeframe": "today"
+        },
+        {
+          "title": "Survey the affected area",
+          "detail": "Check when the problem is worst and how many people it hits.",
+          "owner": "Facilities team",
+          "cost": "free",
+          "timeframe": "this_week"
+        },
+        {
+          "title": "Fund a permanent fix",
+          "detail": "Use the survey data to justify a small budget request.",
+          "owner": "Administration",
+          "cost": "budget",
+          "timeframe": "this_semester"
+        }
+      ],
+      "id": "c_6c089a",
+      "created_at": "2026-09-30T20:06:58Z",
+      "input_type": "text",
+      "transcript": "The canteen queue at lunch is insane, I waited 25 minutes and only two counters were open.",
+      "cluster_id": null
+    },
+    "elapsed_s": 2.33,
+    "auto_flags": [
+      "problem field looks like a copy of the transcript"
+    ]
+  },
+  {
+    "id": 3,
+    "group": "hostel",
+    "text": "There is no hot water in the hostel bathrooms in the morning, it has been like this for two weeks.",
+    "card": {
+      "problem": "There is no hot water in the hostel bathrooms in the morning, it has been like this for tw",
+      "pattern": "Stub mode: this is a canned pattern. Set STUB_MODE=0 for real output.",
+      "affected": "Stub mode: other students who use the same place.",
+      "fixes": [
+        {
+          "title": "Post a fault-reporting QR code",
+          "detail": "Link it to a simple form so staff see when and where it happens.",
+          "owner": "Facilities desk",
+          "cost": "free",
+          "timeframe": "today"
+        },
+        {
+          "title": "Survey the affected area",
+          "detail": "Check when the problem is worst and how many people it hits.",
+          "owner": "Facilities team",
+          "cost": "free",
+          "timeframe": "this_week"
+        },
+        {
+          "title": "Fund a permanent fix",
+          "detail": "Use the survey data to justify a small budget request.",
+          "owner": "Administration",
+          "cost": "budget",
+          "timeframe": "this_semester"
+        }
+      ],
+      "id": "c_15bc7e",
+      "created_at": "2026-09-30T20:07:01Z",
+      "input_type": "text",
+      "transcript": "There is no hot water in the hostel bathrooms in the morning, it has been like this for two weeks.",
+      "cluster_id": null
+    },
+    "elapsed_s": 2.31,
+    "auto_flags": [
+      "problem field looks like a copy of the transcript"
+    ]
+  },
+  {
+    "id": 4,
+    "group": "bus",
+    "text": "The college bus arrives twenty minutes late almost every day and we miss the first lecture.",
+    "card": {
+      "problem": "The college bus arrives twenty minutes late almost every day and we miss the first lecture",
+      "pattern": "Stub mode: this is a canned pattern. Set STUB_MODE=0 for real output.",
+      "affected": "Stub mode: other students who use the same place.",
+      "fixes": [
+        {
+          "title": "Post a fault-reporting QR code",
+          "detail": "Link it to a simple form so staff see when and where it happens.",
+          "owner": "Facilities desk",
+          "cost": "free",
+          "timeframe": "today"
+        },
+        {
+          "title": "Survey the affected area",
+          "detail": "Check when the problem is worst and how many people it hits.",
+          "owner": "Facilities team",
+          "cost": "free",
+          "timeframe": "this_week"
+        },
+        {
+          "title": "Fund a permanent fix",
+          "detail": "Use the survey data to justify a small budget request.",
+          "owner": "Administration",
+          "cost": "budget",
+          "timeframe": "this_semester"
+        }
+      ],
+      "id": "c_85c8af",
+      "created_at": "2026-09-30T20:07:03Z",
+      "input_type": "text",
+      "transcript": "The college bus arrives twenty minutes late almost every day and we miss the first lecture.",
+      "cluster_id": null
+    },
+    "elapsed_s": 2.35,
+    "auto_flags": [
+      "problem field looks like a copy of the transcript"
+    ]
+  },
+  {
+    "id": 5,
+    "group": "library",
+    "text": "The library closes at 6 pm but exam season is when we need it most, why can it not stay open until 9?",
+    "card": {
+      "problem": "The library closes at 6 pm but exam season is when we need it most, why can it not stay op",
+      "pattern": "Stub mode: this is a canned pattern. Set STUB_MODE=0 for real output.",
+      "affected": "Stub mode: other students who use the same place.",
+      "fixes": [
+        {
+          "title": "Post a fault-reporting QR code",
+          "detail": "Link it to a simple form so staff see when and where it happens.",
+          "owner": "Facilities desk",
+          "cost": "free",
+          "timeframe": "today"
+        },
+        {
+          "title": "Survey the affected area",
+          "detail": "Check when the problem is worst and how many people it hits.",
+          "owner": "Facilities team",
+          "cost": "free",
+          "timeframe": "this_week"
+        },
+        {
+          "title": "Fund a permanent fix",
+          "detail": "Use the survey data to justify a small budget request.",
+          "owner": "Administration",
+          "cost": "budget",
+          "timeframe": "this_semester"
+        }
+      ],
+      "id": "c_97e5b7",
+      "created_at": "2026-09-30T20:07:05Z",
+      "input_type": "text",
+      "transcript": "The library closes at 6 pm but exam season is when we need it most, why can it not stay open until 9?",
+      "cluster_id": null
+    },
+    "elapsed_s": 2.35,
+    "auto_flags": [
+      "problem field looks like a copy of the transcript"
+    ]
+  },
+  {
+    "id": 6,
+    "group": "ac",
+    "text": "The AC in classroom C102 has not worked for a month, it is 35 degrees outside and we cannot concentrate.",
+    "card": {
+      "problem": "The AC in classroom C102 has not worked for a month, it is 35 degrees outside and we canno",
+      "pattern": "Stub mode: this is a canned pattern. Set STUB_MODE=0 for real output.",
+      "affected": "Stub mode: other students who use the same place.",
+      "fixes": [
+        {
+          "title": "Post a fault-reporting QR code",
+          "detail": "Link it to a simple form so staff see when and where it happens.",
+          "owner": "Facilities desk",
+          "cost": "free",
+          "timeframe": "today"
+        },
+        {
+          "title": "Survey the affected area",
+          "detail": "Check when the problem is worst and how many people it hits.",
+          "owner": "Facilities team",
+          "cost": "free",
+          "timeframe": "this_week"
+        },
+        {
+          "title": "Fund a permanent fix",
+          "detail": "Use the survey data to justify a small budget request.",
+          "owner": "Administration",
+          "cost": "budget",
+          "timeframe": "this_semester"
+        }
+      ],
+      "id": "c_ef43b7",
+      "created_at": "2026-09-30T20:07:08Z",
+      "input_type": "text",
+      "transcript": "The AC in classroom C102 has not worked for a month, it is 35 degrees outside and we cannot concentrate.",
+      "cluster_id": null
+    },
+    "elapsed_s": 2.34,
+    "auto_flags": [
+      "problem field looks like a copy of the transcript"
+    ]
+  },
+  {
+    "id": 7,
+    "group": "washroom",
+    "text": "There is no soap or hand wash in any of the washrooms on the second floor, it has been missing for days.",
+    "card": {
+      "problem": "There is no soap or hand wash in any of the washrooms on the second floor, it has been mis",
+      "pattern": "Stub mode: this is a canned pattern. Set STUB_MODE=0 for real output.",
+      "affected": "Stub mode: other students who use the same place.",
+      "fixes": [
+        {
+          "title": "Post a fault-reporting QR code",
+          "detail": "Link it to a simple form so staff see when and where it happens.",
+          "owner": "Facilities desk",
+          "cost": "free",
+          "timeframe": "today"
+        },
+        {
+          "title": "Survey the affected area",
+          "detail": "Check when the problem is worst and how many people it hits.",
+          "owner": "Facilities team",
+          "cost": "free",
+          "timeframe": "this_week"
+        },
+        {
+          "title": "Fund a permanent fix",
+          "detail": "Use the survey data to justify a small budget request.",
+          "owner": "Administration",
+          "cost": "budget",
+          "timeframe": "this_semester"
+        }
+      ],
+      "id": "c_16237b",
+      "created_at": "2026-09-30T20:07:10Z",
+      "input_type": "text",
+      "transcript": "There is no soap or hand wash in any of the washrooms on the second floor, it has been missing for days.",
+      "cluster_id": null
+    },
+    "elapsed_s": 2.39,
+    "auto_flags": [
+      "problem field looks like a copy of the transcript"
+    ]
+  },
+  {
+    "id": 8,
+    "group": "classroom",
+    "text": "The projector in D201 keeps flickering and the faculty has complained multiple times but nothing has been fixed.",
+    "card": {
+      "problem": "The projector in D201 keeps flickering and the faculty has complained multiple times but n",
+      "pattern": "Stub mode: this is a canned pattern. Set STUB_MODE=0 for real output.",
+      "affected": "Stub mode: other students who use the same place.",
+      "fixes": [
+        {
+          "title": "Post a fault-reporting QR code",
+          "detail": "Link it to a simple form so staff see when and where it happens.",
+          "owner": "Facilities desk",
+          "cost": "free",
+          "timeframe": "today"
+        },
+        {
+          "title": "Survey the affected area",
+          "detail": "Check when the problem is worst and how many people it hits.",
+          "owner": "Facilities team",
+          "cost": "free",
+          "timeframe": "this_week"
+        },
+        {
+          "title": "Fund a permanent fix",
+          "detail": "Use the survey data to justify a small budget request.",
+          "owner": "Administration",
+          "cost": "budget",
+          "timeframe": "this_semester"
+        }
+      ],
+      "id": "c_9ed714",
+      "created_at": "2026-09-30T20:07:12Z",
+      "input_type": "text",
+      "transcript": "The projector in D201 keeps flickering and the faculty has complained multiple times but nothing has been fixed.",
+      "cluster_id": null
+    },
+    "elapsed_s": 2.36,
+    "auto_flags": [
+      "problem field looks like a copy of the transcript"
+    ]
+  },
+  {
+    "id": 9,
+    "group": "medical",
+    "text": "The campus medical room is only open until 2 pm which is useless if you feel sick during an evening lab.",
+    "card": {
+      "problem": "The campus medical room is only open until 2 pm which is useless if you feel sick during a",
+      "pattern": "Stub mode: this is a canned pattern. Set STUB_MODE=0 for real output.",
+      "affected": "Stub mode: other students who use the same place.",
+      "fixes": [
+        {
+          "title": "Post a fault-reporting QR code",
+          "detail": "Link it to a simple form so staff see when and where it happens.",
+          "owner": "Facilities desk",
+          "cost": "free",
+          "timeframe": "today"
+        },
+        {
+          "title": "Survey the affected area",
+          "detail": "Check when the problem is worst and how many people it hits.",
+          "owner": "Facilities team",
+          "cost": "free",
+          "timeframe": "this_week"
+        },
+        {
+          "title": "Fund a permanent fix",
+          "detail": "Use the survey data to justify a small budget request.",
+          "owner": "Administration",
+          "cost": "budget",
+          "timeframe": "this_semester"
+        }
+      ],
+      "id": "c_d937bc",
+      "created_at": "2026-09-30T20:07:15Z",
+      "input_type": "text",
+      "transcript": "The campus medical room is only open until 2 pm which is useless if you feel sick during an evening lab.",
+      "cluster_id": null
+    },
+    "elapsed_s": 2.29,
+    "auto_flags": [
+      "problem field looks like a copy of the transcript"
+    ]
+  },
+  {
+    "id": 10,
+    "group": "wifi",
+    "text": "The Wi-Fi password was changed without telling anyone and the IT desk was unreachable for two days.",
+    "card": {
+      "problem": "The Wi-Fi password was changed without telling anyone and the IT desk was unreachable for ",
+      "pattern": "Stub mode: this is a canned pattern. Set STUB_MODE=0 for real output.",
+      "affected": "Stub mode: other students who use the same place.",
+      "fixes": [
+        {
+          "title": "Post a fault-reporting QR code",
+          "detail": "Link it to a simple form so staff see when and where it happens.",
+          "owner": "Facilities desk",
+          "cost": "free",
+          "timeframe": "today"
+        },
+        {
+          "title": "Survey the affected area",
+          "detail": "Check when the problem is worst and how many people it hits.",
+          "owner": "Facilities team",
+          "cost": "free",
+          "timeframe": "this_week"
+        },
+        {
+          "title": "Fund a permanent fix",
+          "detail": "Use the survey data to justify a small budget request.",
+          "owner": "Administration",
+          "cost": "budget",
+          "timeframe": "this_semester"
+        }
+      ],
+      "id": "c_908d54",
+      "created_at": "2026-09-30T20:07:17Z",
+      "input_type": "text",
+      "transcript": "The Wi-Fi password was changed without telling anyone and the IT desk was unreachable for two days.",
+      "cluster_id": null
+    },
+    "elapsed_s": 2.33,
+    "auto_flags": [
+      "problem field looks like a copy of the transcript"
+    ]
+  }
+]

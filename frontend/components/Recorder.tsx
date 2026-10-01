@@ -167,7 +167,7 @@ export default function Recorder({ onAudio, onText }: Props) {
       onAudio(blob, `rant.${ext}`);
     };
 
-    rec.start();
+    rec.start(250);
     startedAtRef.current = Date.now();
     setSeconds(0);
     setRecording(true);
@@ -187,7 +187,14 @@ export default function Recorder({ onAudio, onText }: Props) {
   function stop() {
     stopTimer();
     const rec = recorderRef.current;
-    if (rec && rec.state !== "inactive") rec.stop();
+    if (rec && rec.state !== "inactive") {
+      try {
+        rec.requestData();
+      } catch {
+        /* ignore if not supported in all states */
+      }
+      rec.stop();
+    }
   }
 
   function submitText() {
@@ -272,7 +279,11 @@ export default function Recorder({ onAudio, onText }: Props) {
               </p>
             </div>
           </div>
+          <p className="mt-6 text-center text-xs text-ink-soft">
+            🔒 Your rant is processed locally and stored anonymously. Voice audio is deleted immediately.
+          </p>
         </div>
+
       ) : (
         <div className="p-5 sm:p-8">
           <label htmlFor="rant-text" className="font-display text-lg font-semibold text-ink">

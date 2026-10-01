@@ -33,5 +33,5 @@ CLUSTER_THRESHOLD = float(os.getenv("CLUSTER_THRESHOLD", "0.4" if STUB_MODE else
 DB_PATH = os.getenv("DB_PATH", str(ROOT / "data" / "rantlab.db"))
 
 MAX_AUDIO_BYTES = 10 * 1024 * 1024
-MIN_AUDIO_BYTES = 1000
+MIN_AUDIO_BYTES = 200
 MAX_TEXT_CHARS = 2000

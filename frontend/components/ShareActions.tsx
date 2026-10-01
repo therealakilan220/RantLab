@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, type RefObject } from "react";
+import { useEffect, useState, type RefObject } from "react";
 import { toPng } from "html-to-image";
 import { toDataURL } from "qrcode";
 import { useToast } from "./Toast";
@@ -23,25 +23,91 @@ const iconProps = {
   "aria-hidden": true,
 };
 
+const STORAGE_KEY = "rantlab_public_url";
+
 export default function ShareActions({ targetRef, cardId, problem }: Props) {
   const toast = useToast();
   const [saving, setSaving] = useState(false);
   const [qr, setQr] = useState<string | null>(null);
   const [qrOpen, setQrOpen] = useState(false);
+  const [customOrigin, setCustomOrigin] = useState<string>("");
+  const [inputUrl, setInputUrl] = useState<string>("");
+  const [showConfig, setShowConfig] = useState(false);
+  const [isLocalhost, setIsLocalhost] = useState(false);
 
-  function getShareUrl(): string {
-    const customBase = process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, "");
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+    setIsLocalhost(isLocal);
+
+    const saved = localStorage.getItem(STORAGE_KEY) || process.env.NEXT_PUBLIC_APP_URL || "";
+    if (saved) {
+      setCustomOrigin(saved);
+      setInputUrl(saved);
+    } else if (isLocal) {
+      setShowConfig(true);
+    }
+  }, []);
+
+  const getEffectiveUrl = (): string => {
+    if (customOrigin) {
+      return `${customOrigin.replace(/\/+$/, "")}/card/${encodeURIComponent(cardId)}`;
+    }
+    const customBase = process.env.NEXT_PUBLIC_APP_URL?.replace(/\/+$/, "");
     if (customBase) {
-      return `${customBase}/card/${cardId}`;
+      return `${customBase}/card/${encodeURIComponent(cardId)}`;
     }
     if (typeof window !== "undefined") {
-      return window.location.href;
+      return `${window.location.origin}/card/${encodeURIComponent(cardId)}`;
     }
     return `/card/${cardId}`;
+  };
+
+  const effectiveUrl = getEffectiveUrl();
+
+  useEffect(() => {
+    if (!qrOpen) return;
+    toDataURL(effectiveUrl, {
+      margin: 1,
+      width: 360,
+      color: { dark: "#16213e", light: "#ffffff" },
+    })
+      .then((data) => setQr(data))
+      .catch(() => toast("Couldn't create the QR code.", "error"));
+  }, [qrOpen, effectiveUrl, toast]);
+
+  function saveCustomUrl() {
+    let clean = inputUrl.trim();
+    if (!clean) {
+      localStorage.removeItem(STORAGE_KEY);
+      setCustomOrigin("");
+      toast("Reset to default address");
+      return;
+    }
+    if (!clean.startsWith("http://") && !clean.startsWith("https://")) {
+      clean = `https://${clean}`;
+    }
+    clean = clean.replace(/\/+$/, "");
+    try {
+      new URL(clean);
+      localStorage.setItem(STORAGE_KEY, clean);
+      setCustomOrigin(clean);
+      setInputUrl(clean);
+      toast("Public share URL saved!");
+    } catch {
+      toast("Please enter a valid URL (e.g. https://xyz.trycloudflare.com)", "error");
+    }
+  }
+
+  function resetUrl() {
+    localStorage.removeItem(STORAGE_KEY);
+    setCustomOrigin("");
+    setInputUrl("");
+    toast("Reset to current origin");
   }
 
   async function share() {
-    const url = getShareUrl();
+    const url = effectiveUrl;
     const text = `${problem} Here's a plan to fix it:`;
     if (typeof navigator.share === "function") {
       try {
@@ -56,10 +122,10 @@ export default function ShareActions({ targetRef, cardId, problem }: Props) {
 
   async function copyLink() {
     try {
-      await navigator.clipboard.writeText(getShareUrl());
-      toast("Link copied");
+      await navigator.clipboard.writeText(effectiveUrl);
+      toast(customOrigin ? "Public link copied" : "Link copied");
     } catch {
-      toast("Couldn't copy. Select the address bar and copy it instead.", "error");
+      toast("Couldn't copy link to clipboard.", "error");
     }
   }
 
@@ -81,21 +147,8 @@ export default function ShareActions({ targetRef, cardId, problem }: Props) {
     }
   }
 
-  async function toggleQr() {
-    if (qrOpen) {
-      setQrOpen(false);
-      return;
-    }
-    if (!qr) {
-      try {
-        const url = getShareUrl();
-        setQr(await toDataURL(url, { margin: 1, width: 360, color: { dark: "#16213e", light: "#ffffff" } }));
-      } catch {
-        toast("Couldn't create the QR code.", "error");
-        return;
-      }
-    }
-    setQrOpen(true);
+  function toggleQr() {
+    setQrOpen((prev) => !prev);
   }
 
   const secondary =
@@ -145,18 +198,80 @@ export default function ShareActions({ targetRef, cardId, problem }: Props) {
         </Link>
       </div>
 
-      {qrOpen && qr && (
-        <div className="rise flex flex-col items-center gap-5 rounded-[24px] border border-line bg-surface p-6 text-center sm:flex-row sm:text-left">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={qr} alt="QR code that opens this plan" className="h-40 w-40 shrink-0 rounded-xl bg-white p-2 shadow-sm" />
-          <div className="flex-1 overflow-hidden">
-            <p className="font-display text-xl font-bold text-ink">Scan to open on a phone</p>
-            <p className="mt-1 text-sm leading-relaxed text-ink-soft">
-              Point any phone camera at the code to open this plan and forward it to whoever can fix the problem.
-            </p>
-            <div className="mt-3 flex items-center gap-2 rounded-xl border border-line bg-mist px-3 py-2 text-xs text-ink-soft">
-              <span className="truncate font-mono">{getShareUrl()}</span>
+      {qrOpen && (
+        <div className="rise space-y-4 rounded-[24px] border border-line bg-surface p-6">
+          <div className="flex flex-col items-center gap-5 text-center sm:flex-row sm:text-left">
+            {qr ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={qr} alt="QR code that opens this plan" className="h-44 w-44 shrink-0 rounded-xl bg-white p-2 shadow-sm" />
+            ) : (
+              <div className="flex h-44 w-44 shrink-0 items-center justify-center rounded-xl bg-mist text-xs text-ink-soft">
+                Generating QR...
+              </div>
+            )}
+            <div className="min-w-0 flex-1">
+              <p className="font-display text-xl font-bold text-ink">Scan to open on a phone</p>
+              <p className="mt-1 text-sm leading-relaxed text-ink-soft">
+                Point any phone camera at the code to open this plan and forward it to whoever can fix the problem.
+              </p>
+              <p className="mt-2.5 truncate rounded-lg bg-mist/70 px-3 py-1.5 font-mono text-xs text-ink-soft">
+                {effectiveUrl}
+              </p>
             </div>
+          </div>
+
+          {/* Localhost / Public URL configuration helper */}
+          <div className="border-t border-line pt-4">
+            <div className="flex items-center justify-between gap-2">
+              <span className="text-xs font-semibold uppercase tracking-wider text-ink-soft">
+                {isLocalhost && !customOrigin ? "⚠️ Localhost Notice & Public Tunnel" : "Public Share Address"}
+              </span>
+              <button
+                type="button"
+                onClick={() => setShowConfig((prev) => !prev)}
+                className="text-xs font-medium text-brand hover:underline"
+              >
+                {showConfig ? "Hide settings" : "Configure public/tunnel URL"}
+              </button>
+            </div>
+
+            {showConfig && (
+              <div className="mt-3 rounded-xl bg-mist/60 p-4 text-xs">
+                {isLocalhost && !customOrigin && (
+                  <p className="mb-2 text-heat font-medium">
+                    Other devices (like mobile phones) cannot open &ldquo;localhost&rdquo; links.
+                    Run a tunnel (e.g. <code className="rounded bg-surface px-1 py-0.5 text-ink">cloudflared tunnel --url http://localhost:3000</code> or ngrok) or use your LAN IP, and paste the URL below:
+                  </p>
+                )}
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                  <input
+                    type="text"
+                    value={inputUrl}
+                    onChange={(e) => setInputUrl(e.target.value)}
+                    placeholder="https://your-tunnel.trycloudflare.com or http://192.168.1.X:3000"
+                    className="flex-1 rounded-lg border border-line bg-surface px-3 py-2 text-xs font-mono text-ink outline-none focus:border-ink"
+                  />
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      onClick={saveCustomUrl}
+                      className="rounded-lg bg-brand px-3 py-2 font-semibold text-white transition-colors hover:bg-brand/90"
+                    >
+                      Apply
+                    </button>
+                    {customOrigin && (
+                      <button
+                        type="button"
+                        onClick={resetUrl}
+                        className="rounded-lg border border-line bg-surface px-3 py-2 font-medium text-ink hover:border-ink"
+                      >
+                        Reset
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}
