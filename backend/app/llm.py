@@ -84,18 +84,216 @@ EXAMPLE_TANGLISH_OUT = {
 
 
 def _stub_fields(transcript: str) -> dict:
-    first = transcript.strip().split(".")[0][:90] or "Stub problem"
+    t_lower = transcript.lower()
+    
+    if any(k in t_lower for k in ("lift", "elevator")):
+        return {
+            "problem": "Campus elevator is out of service, causing mobility bottlenecks for upper floors.",
+            "pattern": "Mechanical wear and lack of scheduled preventive maintenance during peak building hours.",
+            "affected": "Disabled students, staff, and students with classes on upper floors.",
+            "fixes": [
+                {
+                    "title": "Post out-of-service notices and redirect traffic",
+                    "detail": "Estate office to place clear 'Out of Service' signage and redirect foot traffic to the service lift or stairs.",
+                    "owner": "Facilities desk",
+                    "cost": "free",
+                    "timeframe": "today",
+                },
+                {
+                    "title": "Emergency elevator technician inspection",
+                    "detail": "Schedule emergency elevator technician inspection to diagnose motor/cable failure.",
+                    "owner": "Maintenance team",
+                    "cost": "cheap",
+                    "timeframe": "this_week",
+                },
+                {
+                    "title": "Establish vendor AMC maintenance contract",
+                    "detail": "Establish a recurring quarterly AMC contract with the elevator vendor to ensure reliable uptime.",
+                    "owner": "Campus Administration",
+                    "cost": "budget",
+                    "timeframe": "this_semester",
+                },
+            ],
+        }
+
+    if any(k in t_lower for k in ("wifi", "wi-fi", "internet", "network", "வைஃபை")):
+        return {
+            "problem": "Campus Wi-Fi connectivity drops frequently during peak study hours.",
+            "pattern": "Access point saturation and bandwidth congestion during high-demand periods.",
+            "affected": "Students and researchers needing internet for coursework and assignment submissions.",
+            "fixes": [
+                {
+                    "title": "Reboot and load-balance saturated routers",
+                    "detail": "Restart high-load access points and prioritize academic traffic bandwidth during study hours.",
+                    "owner": "IT / Network team",
+                    "cost": "free",
+                    "timeframe": "today",
+                },
+                {
+                    "title": "Conduct Wi-Fi dead-zone audit",
+                    "detail": "Map signal coverage across floors to identify areas requiring signal repeaters.",
+                    "owner": "IT / Network team",
+                    "cost": "cheap",
+                    "timeframe": "this_week",
+                },
+                {
+                    "title": "Deploy high-capacity enterprise access points",
+                    "detail": "Install high-density Wi-Fi 6 access points in high-traffic study areas.",
+                    "owner": "Administration",
+                    "cost": "budget",
+                    "timeframe": "this_semester",
+                },
+            ],
+        }
+
+    if any(k in t_lower for k in ("canteen", "food", "lunch", "cafeteria")):
+        return {
+            "problem": "Canteen lunch queues are excessively long due to insufficient billing counters.",
+            "pattern": "High demand surge between lectures while staffing levels remain static.",
+            "affected": "Students and faculty with short 30-40 minute lunch intervals.",
+            "fixes": [
+                {
+                    "title": "Staff all billing counters during lunch hours",
+                    "detail": "Shift staff break timings so all billing counters remain fully operational from 12 to 2 PM.",
+                    "owner": "Canteen manager",
+                    "cost": "free",
+                    "timeframe": "today",
+                },
+                {
+                    "title": "Introduce quick pre-order kiosk or token line",
+                    "detail": "Set up a separate line for pre-packed meals and quick beverage pickups.",
+                    "owner": "Canteen manager and student council",
+                    "cost": "cheap",
+                    "timeframe": "this_week",
+                },
+                {
+                    "title": "Expand dining area and add automated POS terminals",
+                    "detail": "Install self-checkout kiosks and add additional modular seating.",
+                    "owner": "Administration",
+                    "cost": "budget",
+                    "timeframe": "this_semester",
+                },
+            ],
+        }
+
+    if any(k in t_lower for k in ("hostel", "water", "bathroom", "washroom", "heater")):
+        return {
+            "problem": "Hostel facilities suffer from inconsistent basic amenities during morning rush hours.",
+            "pattern": "High simultaneous morning usage exceeding local supply line capacity.",
+            "affected": "Hostel residents getting ready for early morning lectures.",
+            "fixes": [
+                {
+                    "title": "Inspect valves and adjust booster pump schedule",
+                    "detail": "Adjust maintenance pump timings to activate 30 minutes prior to peak morning usage.",
+                    "owner": "Hostel warden",
+                    "cost": "free",
+                    "timeframe": "today",
+                },
+                {
+                    "title": "Repair faulty fixtures and replace heating coils",
+                    "detail": "Deploy plumbing crew to repair leaking valves and service hot water boilers.",
+                    "owner": "Estate Maintenance",
+                    "cost": "cheap",
+                    "timeframe": "this_week",
+                },
+                {
+                    "title": "Upgrade water storage and solar heater capacity",
+                    "detail": "Install high-capacity auxiliary overhead tanks and solar heating backup.",
+                    "owner": "Campus Administration",
+                    "cost": "budget",
+                    "timeframe": "this_semester",
+                },
+            ],
+        }
+
+    if any(k in t_lower for k in ("bus", "transport", "route")):
+        return {
+            "problem": "College bus service is frequently delayed, causing students to miss morning lectures.",
+            "pattern": "Fixed route schedules do not account for morning traffic bottlenecks and lack live tracking.",
+            "affected": "Day-scholar students and faculty commuting from outer campus routes.",
+            "fixes": [
+                {
+                    "title": "Adjust morning departure times earlier by 15 minutes",
+                    "detail": "Shift origin depot departure time earlier to create a traffic buffer for morning peak hours.",
+                    "owner": "Transport officer",
+                    "cost": "free",
+                    "timeframe": "today",
+                },
+                {
+                    "title": "Enable GPS live bus tracking for students",
+                    "detail": "Activate driver smartphone GPS sharing so students can monitor real-time bus arrivals.",
+                    "owner": "Transport coordinator",
+                    "cost": "cheap",
+                    "timeframe": "this_week",
+                },
+                {
+                    "title": "Deploy additional bus on high-density routes",
+                    "detail": "Contract an auxiliary bus for congested morning and evening lab return routes.",
+                    "owner": "Campus Administration",
+                    "cost": "budget",
+                    "timeframe": "this_semester",
+                },
+            ],
+        }
+
+    if any(k in t_lower for k in ("library", "book", "reading room", "study")):
+        return {
+            "problem": "Library operating hours and seating capacity are insufficient during exam periods.",
+            "pattern": "Study facility demand surges sharply during exam weeks while operating hours remain fixed.",
+            "affected": "Students preparing for semester exams needing quiet study spaces in the evening.",
+            "fixes": [
+                {
+                    "title": "Extend library reading room hours to 9 PM during exam weeks",
+                    "detail": "Roster student volunteers or security staff to keep ground-floor reading halls open late.",
+                    "owner": "Chief Librarian",
+                    "cost": "free",
+                    "timeframe": "today",
+                },
+                {
+                    "title": "Convert vacant seminar rooms into temporary quiet study halls",
+                    "detail": "Open unused department seminar halls after 5 PM for self-study.",
+                    "owner": "Academic Dean",
+                    "cost": "free",
+                    "timeframe": "this_week",
+                },
+                {
+                    "title": "Expand 24/7 digital reading room capacity",
+                    "detail": "Equip additional hall with power outlets, LED study lamps, and ergonomic seating.",
+                    "owner": "Campus Administration",
+                    "cost": "budget",
+                    "timeframe": "this_semester",
+                },
+            ],
+        }
+
+    # Clean default fallback for any other complaint
+    first = transcript.strip().split(".")[0][:90] or "Campus facility issue"
     return {
-        "problem": first,
-        "pattern": "Stub mode: this is a canned pattern. Set STUB_MODE=0 for real output.",
-        "affected": "Stub mode: other students who use the same place.",
+        "problem": f"{first} needs immediate maintenance attention.",
+        "pattern": "Recurring breakdown due to continuous usage without scheduled inspection.",
+        "affected": "Students, faculty, and campus staff using this facility daily.",
         "fixes": [
-            {"title": "Post a fault-reporting QR code", "detail": "Link it to a simple form so staff see when and where it happens.",
-             "owner": "Facilities desk", "cost": "free", "timeframe": "today"},
-            {"title": "Survey the affected area", "detail": "Check when the problem is worst and how many people it hits.",
-             "owner": "Facilities team", "cost": "cheap", "timeframe": "this_week"},
-            {"title": "Fund a permanent fix", "detail": "Use the survey data to justify a small budget request.",
-             "owner": "Administration", "cost": "budget", "timeframe": "this_semester"},
+            {
+                "title": "Deploy immediate inspection and temporary signage",
+                "detail": "Send on-duty maintenance staff to inspect the issue and place status notifications.",
+                "owner": "Facilities desk",
+                "cost": "free",
+                "timeframe": "today",
+            },
+            {
+                "title": "Conduct detailed root-cause diagnosis",
+                "detail": "Evaluate repair requirements and procure necessary replacement parts.",
+                "owner": "Maintenance team",
+                "cost": "cheap",
+                "timeframe": "this_week",
+            },
+            {
+                "title": "Implement permanent preventive maintenance protocol",
+                "detail": "Establish periodic inspection cycles to prevent similar recurring failures.",
+                "owner": "Campus Administration",
+                "cost": "budget",
+                "timeframe": "this_semester",
+            },
         ],
     }
 

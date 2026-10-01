@@ -330,6 +330,10 @@ export default function Recorder({ onAudio, onText }: Props) {
           {error}
         </p>
       )}
+
+      <p className="border-t border-line px-5 py-3 text-center text-xs text-ink-soft sm:px-8">
+        Your rant is processed locally and stored anonymously. No names or contact details are recorded.
+      </p>
     </div>
   );
 }

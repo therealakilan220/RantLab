@@ -1,0 +1,237 @@
+[
+  {
+    "test": "GET /api/health returns 200",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "test": "status == ok",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "test": "stub_mode field present",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "test": "ollama field present",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "test": "whisper field present",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "test": "Normal text rant -> 200",
+    "status": "PASS",
+    "detail": "{\"problem\":\"Campus Wi-Fi connectivity drops frequently during peak study hours.\""
+  },
+  {
+    "test": "Card has id",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "test": "Card has problem",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "test": "Card has pattern",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "test": "Card has affected",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "test": "Card has exactly 3 fixes",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "test": "input_type == text",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "test": "Fix 1 cost valid",
+    "status": "PASS",
+    "detail": "free"
+  },
+  {
+    "test": "Fix 1 timeframe valid",
+    "status": "PASS",
+    "detail": "today"
+  },
+  {
+    "test": "Fix 1 has owner",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "test": "Fix 1 has title",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "test": "Fix 2 cost valid",
+    "status": "PASS",
+    "detail": "cheap"
+  },
+  {
+    "test": "Fix 2 timeframe valid",
+    "status": "PASS",
+    "detail": "this_week"
+  },
+  {
+    "test": "Fix 2 has owner",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "test": "Fix 2 has title",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "test": "Fix 3 cost valid",
+    "status": "PASS",
+    "detail": "budget"
+  },
+  {
+    "test": "Fix 3 timeframe valid",
+    "status": "PASS",
+    "detail": "this_semester"
+  },
+  {
+    "test": "Fix 3 has owner",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "test": "Fix 3 has title",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "test": "Blank text -> error empty_text",
+    "status": "PASS",
+    "detail": "{\"error\":{\"code\":\"empty_text\",\"message\":\"Type or say what's "
+  },
+  {
+    "test": "Empty JSON -> error bad_input",
+    "status": "PASS",
+    "detail": "{\"error\":{\"code\":\"bad_input\",\"message\":\"Send exactly one of "
+  },
+  {
+    "test": "2001-char text -> 413",
+    "status": "PASS",
+    "detail": "413"
+  },
+  {
+    "test": "2000-char text -> 200",
+    "status": "PASS",
+    "detail": "200"
+  },
+  {
+    "test": "Stub voice (5 KB) -> 200",
+    "status": "PASS",
+    "detail": "{\"problem\":\"Campus Wi-Fi connectivity drops frequently durin"
+  },
+  {
+    "test": "input_type == voice",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "test": "1-byte audio -> empty_audio",
+    "status": "PASS",
+    "detail": "{\"error\":{\"code\":\"empty_audio\",\"message\":\"We couldn't hear a"
+  },
+  {
+    "test": "Both audio+text -> bad_input",
+    "status": "PASS",
+    "detail": "{\"error\":{\"code\":\"bad_input\",\"message\":\"Send exactly one of "
+  },
+  {
+    "test": "GET /api/cards/c_7dace6 -> 200",
+    "status": "PASS",
+    "detail": "{\"id\":\"c_7dace6\",\"created_at\":\"2026-10-01T05:13:08Z\",\"input_"
+  },
+  {
+    "test": "Returned card id matches",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "test": "GET /api/cards/c_nope -> 404",
+    "status": "PASS",
+    "detail": "404"
+  },
+  {
+    "test": "GET /api/board -> 200",
+    "status": "PASS",
+    "detail": "{\"generated_at\":\"2026-10-01T05:13:35Z\",\"clusters\":[{\"id\":\"k_"
+  },
+  {
+    "test": "Board has generated_at",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "test": "Board has clusters list",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "test": "Board sorted by count desc",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "test": "Each cluster has id",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "test": "Each cluster has label",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "test": "Each cluster has complaints",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "test": "DB has no 'name' column",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "test": "DB has no 'email' column",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "test": "DB has no 'phone' column",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "test": "DB has no 'student_id' column",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "test": "DB has no 'roll' column",
+    "status": "PASS",
+    "detail": ""
+  }
+]

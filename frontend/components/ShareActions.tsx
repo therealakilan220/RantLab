@@ -29,8 +29,19 @@ export default function ShareActions({ targetRef, cardId, problem }: Props) {
   const [qr, setQr] = useState<string | null>(null);
   const [qrOpen, setQrOpen] = useState(false);
 
+  function getShareUrl(): string {
+    const customBase = process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, "");
+    if (customBase) {
+      return `${customBase}/card/${cardId}`;
+    }
+    if (typeof window !== "undefined") {
+      return window.location.href;
+    }
+    return `/card/${cardId}`;
+  }
+
   async function share() {
-    const url = window.location.href;
+    const url = getShareUrl();
     const text = `${problem} Here's a plan to fix it:`;
     if (typeof navigator.share === "function") {
       try {
@@ -45,7 +56,7 @@ export default function ShareActions({ targetRef, cardId, problem }: Props) {
 
   async function copyLink() {
     try {
-      await navigator.clipboard.writeText(window.location.href);
+      await navigator.clipboard.writeText(getShareUrl());
       toast("Link copied");
     } catch {
       toast("Couldn't copy. Select the address bar and copy it instead.", "error");
@@ -77,7 +88,8 @@ export default function ShareActions({ targetRef, cardId, problem }: Props) {
     }
     if (!qr) {
       try {
-        setQr(await toDataURL(window.location.href, { margin: 1, width: 360, color: { dark: "#16213e", light: "#ffffff" } }));
+        const url = getShareUrl();
+        setQr(await toDataURL(url, { margin: 1, width: 360, color: { dark: "#16213e", light: "#ffffff" } }));
       } catch {
         toast("Couldn't create the QR code.", "error");
         return;
@@ -136,12 +148,15 @@ export default function ShareActions({ targetRef, cardId, problem }: Props) {
       {qrOpen && qr && (
         <div className="rise flex flex-col items-center gap-5 rounded-[24px] border border-line bg-surface p-6 text-center sm:flex-row sm:text-left">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={qr} alt="QR code that opens this plan" className="h-40 w-40 shrink-0 rounded-xl bg-white p-2" />
-          <div>
+          <img src={qr} alt="QR code that opens this plan" className="h-40 w-40 shrink-0 rounded-xl bg-white p-2 shadow-sm" />
+          <div className="flex-1 overflow-hidden">
             <p className="font-display text-xl font-bold text-ink">Scan to open on a phone</p>
             <p className="mt-1 text-sm leading-relaxed text-ink-soft">
               Point any phone camera at the code to open this plan and forward it to whoever can fix the problem.
             </p>
+            <div className="mt-3 flex items-center gap-2 rounded-xl border border-line bg-mist px-3 py-2 text-xs text-ink-soft">
+              <span className="truncate font-mono">{getShareUrl()}</span>
+            </div>
           </div>
         </div>
       )}
