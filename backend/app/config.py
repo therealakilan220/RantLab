@@ -21,6 +21,12 @@ OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "qwen2.5:3b")
 WHISPER_MODEL = os.getenv("WHISPER_MODEL", "base")  # tiny | base | small
 EMBED_MODEL = os.getenv("EMBED_MODEL", "sentence-transformers/all-MiniLM-L6-v2")
 
+# Optional hosted-model fallback (Groq, OpenRouter, etc.). Off by default.
+USE_CLOUD_API = _flag("USE_CLOUD_API", "0")
+CLOUD_API_URL = os.getenv("CLOUD_API_URL", "https://api.groq.com/openai/v1").rstrip("/")
+CLOUD_API_KEY = os.getenv("CLOUD_API_KEY", "")
+CLOUD_API_MODEL = os.getenv("CLOUD_API_MODEL", "llama-3.1-8b-instant")
+
 # Cosine similarity needed to put two complaints in the same cluster.
 CLUSTER_THRESHOLD = float(os.getenv("CLUSTER_THRESHOLD", "0.4" if STUB_MODE else "0.6"))
 

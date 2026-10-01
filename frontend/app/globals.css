@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+:root {
+  --page: #f6f8fb;
+  --surface: #ffffff;
+  --ink: #16213e;
+  --ink-soft: #55607a;
+  --mist: #eef2f7;
+  --line: #dde3ec;
+  --brand: #16213e;
+  --heat: #f2542d;
+  --heat-soft: #fde9e3;
+  --plan: #12876a;
+  --plan-soft: #e1f3ec;
+  --warn: #9a6200;
+  --warn-soft: #fdf0d5;
+  --on-accent: #ffffff;
+  --card-shadow: 0 24px 48px -28px rgba(22, 33, 62, 0.35);
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --page: #0b111e;
+  --surface: #121a2b;
+  --ink: #e7ebf4;
+  --ink-soft: #9aa6bd;
+  --mist: #1a2338;
+  --line: #273250;
+  --brand: #2c4180;
+  --heat: #ff6b47;
+  --heat-soft: rgba(255, 107, 71, 0.14);
+  --plan: #34c79a;
+  --plan-soft: rgba(52, 199, 154, 0.14);
+  --warn: #f3bb4f;
+  --warn-soft: rgba(243, 187, 79, 0.14);
+  --on-accent: #0b111e;
+  --card-shadow: 0 24px 48px -28px rgba(0, 0, 0, 0.8);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-heading), ui-sans-serif, system-ui, sans-serif;
+  --color-page: var(--page);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-mist: var(--mist);
+  --color-line: var(--line);
+  --color-brand: var(--brand);
+  --color-heat: var(--heat);
+  --color-heat-soft: var(--heat-soft);
+  --color-plan: var(--plan);
+  --color-plan-soft: var(--plan-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-on-accent: var(--on-accent);
+  --shadow-card: var(--card-shadow);
+}
+
+@layer base {
+  body {
+    background: var(--page);
+    color: var(--ink);
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+  :focus-visible {
+    outline: 2px solid var(--heat);
+    outline-offset: 3px;
+  }
+  ::selection {
+    background: var(--heat-soft);
+  }
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+.rise {
+  animation: rise 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
